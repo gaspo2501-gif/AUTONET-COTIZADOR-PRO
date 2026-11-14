@@ -1,0 +1,742 @@
+@import "tailwindcss";
+
+/* =========================================================================
+   AUTONET — SISTEMA DE DISEÑO v2
+   Reglas de color:
+   - ROJO  (brand)  → identidad Autonet y navegación activa.
+   - AZUL  (action) → acciones principales (Cotizar, Guardar, Aplicar).
+   - VERDE / ÁMBAR / SLATE → estados comerciales (Disponible / Reservado / Fuera de stock).
+   ========================================================================= */
+
+@theme {
+  /* AUTONET PRO: grafito para actuar, rojo Autonet solo como firma */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+
+  --color-brand-50: #fbebee;
+  --color-brand-100: #f7d6dc;
+  --color-brand-200: #efb0bb;
+  --color-brand-300: #e38595;
+  --color-brand-500: #d42a45;
+  --color-brand-600: #c8102e;
+  --color-brand-700: #a50d26;
+  --color-brand-800: #840a1e;
+
+  /* Acción = grafito (antes azul) */
+  --color-action-50: #f1f0ed;
+  --color-action-100: #e8e7e3;
+  --color-action-200: #dad8d3;
+  --color-action-600: #15171c;
+  --color-action-700: #2a2d34;
+  --color-action-800: #15171c;
+
+  /* El azul suelto de la app pasa a la misma escala grafito: un solo color de acción */
+  --color-blue-50: #f1f0ed;
+  --color-blue-100: #e8e7e3;
+  --color-blue-200: #dad8d3;
+  --color-blue-300: #c5c3be;
+  --color-blue-400: #8a8d94;
+  --color-blue-500: #4a4d55;
+  --color-blue-600: #15171c;
+  --color-blue-700: #2a2d34;
+  --color-blue-800: #15171c;
+  --color-blue-900: #15171c;
+
+  /* Neutros cálidos (piedra) en lugar de gris azulado */
+  --color-slate-50: #fafaf8;
+  --color-slate-100: #f1f0ed;
+  --color-slate-200: #e3e2de;
+  --color-slate-300: #d0cec9;
+  --color-slate-400: #9a9ca2;
+  --color-slate-500: #6b6e76;
+  --color-slate-600: #4a4d55;
+  --color-slate-700: #363940;
+  --color-slate-800: #24262c;
+  --color-slate-900: #15171c;
+  --color-slate-950: #0e0f13;
+
+  /* Estados, más sobrios */
+  --color-emerald-50: #eaf4ee;
+  --color-emerald-500: #2e9161;
+  --color-emerald-600: #1f7a4d;
+  --color-emerald-700: #1f7a4d;
+  --color-emerald-800: #175c3a;
+  --color-amber-50: #faf0de;
+  --color-amber-500: #b26a00;
+  --color-amber-700: #8a5200;
+  --color-amber-800: #8a5200;
+
+  /* Pesos más calmos en toda la app: los títulos se destacan por tamaño, no por grosor */
+  --font-weight-bold: 600;
+  --font-weight-extrabold: 600;
+  --font-weight-black: 650;
+
+  --color-ink: #15171c;
+  --color-canvas: #f5f5f3;
+  --color-sidebar: #16181d;
+
+  --shadow-card: none;
+  --shadow-lift: none;
+  --shadow-sheet: 0 -8px 24px -12px rgba(21, 23, 28, 0.25);
+}
+
+:root {
+  /* Tokens heredados (compatibilidad con componentes existentes) */
+  --autonet-navy: #0a1128;
+  --autonet-primary: #15171c;
+  --autonet-primary-hover: #2a2d34;
+  --autonet-brand: #c8102e;
+  --autonet-surface: #ffffff;
+  --surface: #ffffff;
+  --line: #e3e2de;
+  --accent: #15171c;
+  --autonet-bg: #f5f5f3;
+  --autonet-border: #e3e2de;
+  --autonet-text: #15171c;
+  --autonet-text-muted: #6b6e76;
+  --autonet-success: #059669;
+  --autonet-warning: #d97706;
+  --autonet-danger: #dc2626;
+
+  --sidebar-w: 232px;
+  --bottomnav-h: 64px;
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    text-size-adjust: 100%;
+  }
+  body {
+    font-family: var(--font-sans);
+    color: var(--autonet-text);
+    background-color: var(--color-canvas);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'cv11', 'ss01', 'tnum' 0;
+  }
+  button, [role='button'] {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-slate-900);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+}
+
+/* ---------- Utilidades propias ---------- */
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-slate-300) transparent;
+}
+
+@utility safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ---------- Componentes base ---------- */
+@layer components {
+  .autonet-card {
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+  }
+  .autonet-card-hover {
+    transition: border-color 0.15s ease;
+  }
+  .autonet-card-hover:hover {
+    border-color: var(--color-slate-300);
+  }
+
+  .btn,
+  .autonet-btn-primary,
+  .autonet-btn-secondary,
+  .autonet-btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-weight: 500;
+    font-size: 0.8125rem;
+    line-height: 1.1;
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    border: 1px solid transparent;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .btn:disabled {
+    opacity: 0.5;
+  }
+  .btn-sm {
+    font-size: 0.8125rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+  }
+  .btn-icon {
+    padding: 0.5rem;
+    border-radius: 10px;
+  }
+  .btn-primary,
+  .autonet-btn-primary {
+    background: var(--color-action-600);
+    color: #fff;
+  }
+  .btn-primary:hover:not(:disabled),
+  .autonet-btn-primary:hover {
+    background: var(--color-action-700);
+  }
+  .btn-brand {
+    background: var(--color-brand-600);
+    color: #fff;
+  }
+  .btn-brand:hover:not(:disabled) {
+    background: var(--color-brand-700);
+  }
+  .btn-dark {
+    background: #15171c;
+    color: #fff;
+  }
+  .btn-dark:hover:not(:disabled) {
+    background: var(--color-action-700);
+  }
+  .btn-secondary,
+  .autonet-btn-secondary {
+    background: var(--surface);
+    color: var(--color-slate-900);
+    border-color: var(--color-slate-300);
+  }
+  .btn-secondary:hover:not(:disabled),
+  .autonet-btn-secondary:hover {
+    background: var(--color-slate-50);
+    border-color: var(--color-slate-300);
+  }
+  .btn-ghost,
+  .autonet-btn-ghost {
+    background: transparent;
+    color: var(--color-slate-600);
+  }
+  .btn-ghost:hover:not(:disabled),
+  .autonet-btn-ghost:hover {
+    background: var(--color-slate-100);
+    color: var(--color-slate-900);
+  }
+
+
+  .field {
+    width: 100%;
+    background: var(--surface);
+    color: var(--color-slate-900);
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: 1px solid var(--color-slate-300);
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .field::placeholder {
+    color: var(--color-slate-400);
+  }
+  .field:hover {
+    border-color: var(--color-slate-300);
+  }
+  .field:focus {
+    border-color: var(--color-slate-900);
+    box-shadow: 0 0 0 1px #15171c;
+  }
+  .field-label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--color-slate-600);
+    margin-bottom: 0.375rem;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    white-space: nowrap;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-slate-600);
+    background: var(--surface);
+    border: 1px solid var(--color-slate-300);
+    border-radius: 8px;
+    padding: 0.4rem 0.75rem;
+    transition: all 0.15s ease;
+  }
+  .chip:hover {
+    border-color: var(--color-slate-300);
+  }
+  .chip[data-active='true'] {
+    background: var(--surface);
+    color: var(--color-slate-900);
+    border-color: var(--color-slate-900);
+  }
+
+  .plate {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    font-size: 0.75rem;
+    color: var(--color-slate-900);
+    background: var(--color-slate-100);
+    border: 1px solid var(--color-slate-200);
+    border-radius: 5px;
+    padding: 0.125rem 0.45rem;
+  }
+
+  .kbd {
+    font-family: ui-monospace, Menlo, monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--color-slate-500);
+    background: var(--color-slate-100);
+    border: 1px solid var(--color-slate-200);
+    border-bottom-width: 2px;
+    border-radius: 5px;
+    padding: 0.05rem 0.35rem;
+  }
+}
+
+/* ---------- Animaciones (compatibles con clases animate-in existentes) ---------- */
+@keyframes autonet-enter {
+  from {
+    opacity: var(--enter-opacity, 1);
+    transform: translate3d(var(--enter-x, 0), var(--enter-y, 0), 0) scale(var(--enter-scale, 1));
+  }
+}
+@keyframes autonet-sheet {
+  from {
+    transform: translateY(100%);
+  }
+}
+@keyframes autonet-drawer {
+  from {
+    transform: translateX(100%);
+  }
+}
+@keyframes autonet-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-in {
+  animation: autonet-enter 0.18s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+.fade-in,
+.fade-in-50 {
+  --enter-opacity: 0;
+}
+.zoom-in-95 {
+  --enter-scale: 0.96;
+}
+.slide-in-from-bottom-5 {
+  --enter-y: 1rem;
+}
+.slide-in-from-top-2 {
+  --enter-y: -0.5rem;
+}
+@utility anim-sheet {
+  animation: autonet-sheet 0.26s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+@utility anim-drawer {
+  animation: autonet-drawer 0.24s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+@keyframes autonet-fade {
+  from {
+    opacity: 0;
+  }
+}
+/* Solo opacidad: no crea un "containing block" que rompa modales position:fixed internos */
+@utility anim-fade {
+  animation: autonet-fade 0.2s ease-out backwards;
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: #e2e8f0;
+  border-radius: 8px;
+}
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  animation: autonet-shimmer 1.2s infinite;
+}
+
+mark.hl {
+  background: #fef08a;
+  color: inherit;
+  border-radius: 3px;
+  padding: 0 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- Impresión del presupuesto (A4 estricta, sin cambios funcionales) ---------- */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    min-height: 297mm !important;
+    max-height: 297mm !important;
+    overflow: hidden !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #app-interactive-root,
+  #app-interactive-root nav,
+  #app-interactive-root header,
+  #app-interactive-root footer,
+  #app-interactive-root aside,
+  #app-interactive-root button,
+  #app-interactive-root dialog,
+  .print-hide,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  #quote-print-root {
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    min-height: 297mm !important;
+    max-height: 297mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+    page-break-before: avoid !important;
+    overflow: hidden !important;
+  }
+
+  .budget-a4-sheet,
+  #quote-document-a4 {
+    display: block !important;
+    position: relative !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    min-height: 297mm !important;
+    max-height: 297mm !important;
+    padding: 14mm 14mm 32mm 14mm !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    overflow: hidden !important;
+  }
+
+  .budget-header {
+    display: flex !important;
+    visibility: visible !important;
+  }
+
+  .budget-footer {
+    position: absolute !important;
+    left: 14mm !important;
+    right: 14mm !important;
+    bottom: 12mm !important;
+    margin-top: 0 !important;
+    display: block !important;
+    visibility: visible !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* =====================================================================
+   MODO OSCURO (html.dark). Solo en pantalla: al imprimir siempre sale claro.
+   Los grises se invierten (el texto oscuro pasa a claro y los fondos a grafito),
+   el blanco de las tarjetas pasa a panel oscuro y la acción principal pasa al rojo Autonet.
+   ===================================================================== */
+@media screen {
+  html.dark {
+    color-scheme: dark;
+    --surface: #0f1218;
+    --line: #1f2430;
+    --accent: #e5243b;
+    --color-canvas: #07090d;
+    --color-sidebar: #0f1218;
+    --autonet-text: #edeff4;
+
+    --color-slate-50: #141821;
+    --color-slate-100: #1a1f29;
+    --color-slate-200: #232937;
+    --color-slate-300: #323a4b;
+    --color-slate-400: #5d6477;
+    --color-slate-500: #8b92a5;
+    --color-slate-600: #a3a9b8;
+    --color-slate-700: #c9ceda;
+    --color-slate-800: #dde1ea;
+    --color-slate-900: #edeff4;
+    --color-slate-950: #f7f8fa;
+    --color-gray-50: var(--color-slate-50); --color-gray-100: var(--color-slate-100); --color-gray-200: var(--color-slate-200);
+    --color-gray-300: var(--color-slate-300); --color-gray-400: var(--color-slate-400); --color-gray-500: var(--color-slate-500);
+    --color-gray-600: var(--color-slate-600); --color-gray-700: var(--color-slate-700); --color-gray-800: var(--color-slate-800);
+    --color-gray-900: var(--color-slate-900);
+
+    /* Acción = rojo Autonet */
+    --color-action-50: #1a1f29;
+    --color-action-100: #232937;
+    --color-action-200: #323a4b;
+    --color-action-600: #e5243b;
+    --color-action-700: #c81d31;
+    --color-action-800: #e5243b;
+    --color-blue-50: #1a1f29;
+    --color-blue-100: #232937;
+    --color-blue-200: #323a4b;
+    --color-blue-300: #4a5367;
+    --color-blue-400: #8b92a5;
+    --color-blue-500: #c9ceda;
+    --color-blue-600: #e5243b;
+    --color-blue-700: #c81d31;
+    --color-blue-800: #ff6b7d;
+    --color-blue-900: #ffd5da;
+
+    --color-brand-50: rgba(229, 36, 59, 0.14);
+    --color-brand-100: rgba(229, 36, 59, 0.22);
+    --color-brand-200: rgba(229, 36, 59, 0.38);
+    --color-brand-300: rgba(229, 36, 59, 0.55);
+    --color-brand-600: #e5243b;
+    --color-brand-700: #ff6b7d;
+    --color-brand-800: #ff8d9b;
+
+    --color-emerald-50: rgba(52, 196, 124, 0.13);
+    --color-emerald-100: rgba(52, 196, 124, 0.2);
+    --color-emerald-200: rgba(52, 196, 124, 0.32);
+    --color-emerald-500: #34c47c;
+    --color-emerald-600: #2aa86a;
+    --color-emerald-700: #4fd592;
+    --color-emerald-800: #7de3b0;
+    --color-emerald-900: #b9f0d3;
+    --color-amber-50: rgba(240, 165, 58, 0.13);
+    --color-amber-100: rgba(240, 165, 58, 0.2);
+    --color-amber-200: rgba(240, 165, 58, 0.32);
+    --color-amber-500: #f0a53a;
+    --color-amber-700: #f6bb63;
+    --color-amber-800: #f8c97f;
+    --color-amber-900: #fbe0b3;
+    --color-amber-950: #fdebc8;
+    --color-amber-300: rgba(240, 165, 58, 0.48);
+    --color-amber-400: #f3b55c;
+    --color-amber-600: #e0962f;
+    --color-emerald-300: rgba(52, 196, 124, 0.48);
+    --color-emerald-400: #4fd592;
+    --color-emerald-950: #d4f6e3;
+    --color-blue-950: #ffe3e7;
+    --color-red-50: color-mix(in oklab, #ef4444 13%, #0f1218);
+    --color-red-100: color-mix(in oklab, #ef4444 20%, #0f1218);
+    --color-red-200: color-mix(in oklab, #ef4444 32%, #0f1218);
+    --color-red-300: color-mix(in oklab, #ef4444 48%, #0f1218);
+    --color-red-700: color-mix(in oklab, #f87171 80%, white);
+    --color-red-800: color-mix(in oklab, #f87171 70%, white);
+    --color-red-900: color-mix(in oklab, #f87171 45%, white);
+    --color-red-950: color-mix(in oklab, #f87171 30%, white);
+    --color-orange-50: color-mix(in oklab, #f97316 13%, #0f1218);
+    --color-orange-100: color-mix(in oklab, #f97316 20%, #0f1218);
+    --color-orange-200: color-mix(in oklab, #f97316 32%, #0f1218);
+    --color-orange-300: color-mix(in oklab, #f97316 48%, #0f1218);
+    --color-orange-700: color-mix(in oklab, #fb923c 80%, white);
+    --color-orange-800: color-mix(in oklab, #fb923c 70%, white);
+    --color-orange-900: color-mix(in oklab, #fb923c 45%, white);
+    --color-orange-950: color-mix(in oklab, #fb923c 30%, white);
+    --color-yellow-50: color-mix(in oklab, #eab308 13%, #0f1218);
+    --color-yellow-100: color-mix(in oklab, #eab308 20%, #0f1218);
+    --color-yellow-200: color-mix(in oklab, #eab308 32%, #0f1218);
+    --color-yellow-300: color-mix(in oklab, #eab308 48%, #0f1218);
+    --color-yellow-700: color-mix(in oklab, #facc15 80%, white);
+    --color-yellow-800: color-mix(in oklab, #facc15 70%, white);
+    --color-yellow-900: color-mix(in oklab, #facc15 45%, white);
+    --color-yellow-950: color-mix(in oklab, #facc15 30%, white);
+    --color-lime-50: color-mix(in oklab, #84cc16 13%, #0f1218);
+    --color-lime-100: color-mix(in oklab, #84cc16 20%, #0f1218);
+    --color-lime-200: color-mix(in oklab, #84cc16 32%, #0f1218);
+    --color-lime-300: color-mix(in oklab, #84cc16 48%, #0f1218);
+    --color-lime-700: color-mix(in oklab, #a3e635 80%, white);
+    --color-lime-800: color-mix(in oklab, #a3e635 70%, white);
+    --color-lime-900: color-mix(in oklab, #a3e635 45%, white);
+    --color-lime-950: color-mix(in oklab, #a3e635 30%, white);
+    --color-green-50: color-mix(in oklab, #22c55e 13%, #0f1218);
+    --color-green-100: color-mix(in oklab, #22c55e 20%, #0f1218);
+    --color-green-200: color-mix(in oklab, #22c55e 32%, #0f1218);
+    --color-green-300: color-mix(in oklab, #22c55e 48%, #0f1218);
+    --color-green-700: color-mix(in oklab, #4ade80 80%, white);
+    --color-green-800: color-mix(in oklab, #4ade80 70%, white);
+    --color-green-900: color-mix(in oklab, #4ade80 45%, white);
+    --color-green-950: color-mix(in oklab, #4ade80 30%, white);
+    --color-teal-50: color-mix(in oklab, #14b8a6 13%, #0f1218);
+    --color-teal-100: color-mix(in oklab, #14b8a6 20%, #0f1218);
+    --color-teal-200: color-mix(in oklab, #14b8a6 32%, #0f1218);
+    --color-teal-300: color-mix(in oklab, #14b8a6 48%, #0f1218);
+    --color-teal-700: color-mix(in oklab, #2dd4bf 80%, white);
+    --color-teal-800: color-mix(in oklab, #2dd4bf 70%, white);
+    --color-teal-900: color-mix(in oklab, #2dd4bf 45%, white);
+    --color-teal-950: color-mix(in oklab, #2dd4bf 30%, white);
+    --color-cyan-50: color-mix(in oklab, #06b6d4 13%, #0f1218);
+    --color-cyan-100: color-mix(in oklab, #06b6d4 20%, #0f1218);
+    --color-cyan-200: color-mix(in oklab, #06b6d4 32%, #0f1218);
+    --color-cyan-300: color-mix(in oklab, #06b6d4 48%, #0f1218);
+    --color-cyan-700: color-mix(in oklab, #22d3ee 80%, white);
+    --color-cyan-800: color-mix(in oklab, #22d3ee 70%, white);
+    --color-cyan-900: color-mix(in oklab, #22d3ee 45%, white);
+    --color-cyan-950: color-mix(in oklab, #22d3ee 30%, white);
+    --color-sky-50: color-mix(in oklab, #0ea5e9 13%, #0f1218);
+    --color-sky-100: color-mix(in oklab, #0ea5e9 20%, #0f1218);
+    --color-sky-200: color-mix(in oklab, #0ea5e9 32%, #0f1218);
+    --color-sky-300: color-mix(in oklab, #0ea5e9 48%, #0f1218);
+    --color-sky-700: color-mix(in oklab, #38bdf8 80%, white);
+    --color-sky-800: color-mix(in oklab, #38bdf8 70%, white);
+    --color-sky-900: color-mix(in oklab, #38bdf8 45%, white);
+    --color-sky-950: color-mix(in oklab, #38bdf8 30%, white);
+    --color-indigo-50: color-mix(in oklab, #6366f1 13%, #0f1218);
+    --color-indigo-100: color-mix(in oklab, #6366f1 20%, #0f1218);
+    --color-indigo-200: color-mix(in oklab, #6366f1 32%, #0f1218);
+    --color-indigo-300: color-mix(in oklab, #6366f1 48%, #0f1218);
+    --color-indigo-700: color-mix(in oklab, #818cf8 80%, white);
+    --color-indigo-800: color-mix(in oklab, #818cf8 70%, white);
+    --color-indigo-900: color-mix(in oklab, #818cf8 45%, white);
+    --color-indigo-950: color-mix(in oklab, #818cf8 30%, white);
+    --color-violet-50: color-mix(in oklab, #8b5cf6 13%, #0f1218);
+    --color-violet-100: color-mix(in oklab, #8b5cf6 20%, #0f1218);
+    --color-violet-200: color-mix(in oklab, #8b5cf6 32%, #0f1218);
+    --color-violet-300: color-mix(in oklab, #8b5cf6 48%, #0f1218);
+    --color-violet-700: color-mix(in oklab, #a78bfa 80%, white);
+    --color-violet-800: color-mix(in oklab, #a78bfa 70%, white);
+    --color-violet-900: color-mix(in oklab, #a78bfa 45%, white);
+    --color-violet-950: color-mix(in oklab, #a78bfa 30%, white);
+    --color-purple-50: color-mix(in oklab, #a855f7 13%, #0f1218);
+    --color-purple-100: color-mix(in oklab, #a855f7 20%, #0f1218);
+    --color-purple-200: color-mix(in oklab, #a855f7 32%, #0f1218);
+    --color-purple-300: color-mix(in oklab, #a855f7 48%, #0f1218);
+    --color-purple-700: color-mix(in oklab, #c084fc 80%, white);
+    --color-purple-800: color-mix(in oklab, #c084fc 70%, white);
+    --color-purple-900: color-mix(in oklab, #c084fc 45%, white);
+    --color-purple-950: color-mix(in oklab, #c084fc 30%, white);
+    --color-fuchsia-50: color-mix(in oklab, #d946ef 13%, #0f1218);
+    --color-fuchsia-100: color-mix(in oklab, #d946ef 20%, #0f1218);
+    --color-fuchsia-200: color-mix(in oklab, #d946ef 32%, #0f1218);
+    --color-fuchsia-300: color-mix(in oklab, #d946ef 48%, #0f1218);
+    --color-fuchsia-700: color-mix(in oklab, #e879f9 80%, white);
+    --color-fuchsia-800: color-mix(in oklab, #e879f9 70%, white);
+    --color-fuchsia-900: color-mix(in oklab, #e879f9 45%, white);
+    --color-fuchsia-950: color-mix(in oklab, #e879f9 30%, white);
+    --color-pink-50: color-mix(in oklab, #ec4899 13%, #0f1218);
+    --color-pink-100: color-mix(in oklab, #ec4899 20%, #0f1218);
+    --color-pink-200: color-mix(in oklab, #ec4899 32%, #0f1218);
+    --color-pink-300: color-mix(in oklab, #ec4899 48%, #0f1218);
+    --color-pink-700: color-mix(in oklab, #f472b6 80%, white);
+    --color-pink-800: color-mix(in oklab, #f472b6 70%, white);
+    --color-pink-900: color-mix(in oklab, #f472b6 45%, white);
+    --color-pink-950: color-mix(in oklab, #f472b6 30%, white);
+    --color-rose-50: color-mix(in oklab, #f43f5e 13%, #0f1218);
+    --color-rose-100: color-mix(in oklab, #f43f5e 20%, #0f1218);
+    --color-rose-200: color-mix(in oklab, #f43f5e 32%, #0f1218);
+    --color-rose-300: color-mix(in oklab, #f43f5e 48%, #0f1218);
+    --color-rose-700: color-mix(in oklab, #fb7185 80%, white);
+    --color-rose-800: color-mix(in oklab, #fb7185 70%, white);
+    --color-rose-900: color-mix(in oklab, #fb7185 45%, white);
+    --color-rose-950: color-mix(in oklab, #fb7185 30%, white);
+  }
+
+  /* Blancos "de fondo" pasan a panel oscuro; el texto blanco queda blanco */
+  html.dark .bg-white { background-color: var(--surface); }
+  html.dark .bg-white\/80, html.dark .bg-white\/85, html.dark .bg-white\/90, html.dark .bg-white\/95 { background-color: color-mix(in oklab, var(--surface) 92%, transparent); }
+  html.dark .hover\:bg-white:hover { background-color: var(--color-slate-100); }
+  /* Botones oscuros del modo claro = botón principal rojo */
+  html.dark :is(button, a, label).bg-slate-900, html.dark :is(button, a, label).bg-slate-950, html.dark :is(button, a, label).bg-slate-800 { background-color: var(--accent); }
+  html.dark :is(button, a).hover\:bg-slate-800:hover, html.dark :is(button, a).hover\:bg-slate-700:hover, html.dark :is(button, a).hover\:bg-slate-950:hover { background-color: #c81d31; }
+  /* Paneles que ya eran oscuros en modo claro: conservan sus colores originales, un escalón arriba del fondo */
+  html.dark :is(div, section, aside, article, span, p).bg-slate-900,
+  html.dark :is(div, section, aside, article, span, p).bg-slate-950,
+  html.dark :is(div, section, aside, article, span, p).bg-slate-800,
+  html.dark :is(div, section, aside, article).from-slate-900,
+  html.dark :is(div, section, aside, article).from-slate-950 {
+    --color-slate-50: #fafaf8; --color-slate-100: #f1f0ed; --color-slate-200: #e3e2de; --color-slate-300: #d0cec9;
+    --color-slate-400: #9a9ca2; --color-slate-500: #6b6e76; --color-slate-600: #4a4d55; --color-slate-700: #363940;
+    --color-slate-800: #232937; --color-slate-900: #1a1f29; --color-slate-950: #141821;
+    --color-amber-400: #fbbf24; --color-emerald-400: #34d399;
+    border-color: #2a3040;
+  }
+  html.dark .text-white.bg-slate-100, html.dark .bg-slate-100 .text-white { color: var(--color-slate-900); }
+  html.dark .autonet-card { border-color: var(--line); border-radius: 14px; }
+  html.dark .shadow-sm, html.dark .shadow, html.dark .shadow-md, html.dark .shadow-lg, html.dark .shadow-xl, html.dark .shadow-2xl { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45); }
+  html.dark .plate { background: #161a23; border-color: #2a3040; color: #edeff4; }
+  html.dark ::selection { background: rgba(229, 36, 59, 0.35); }
+
+  /* Documentos (presupuesto, boleto) se ven siempre en papel blanco */
+  html.dark .light-island {
+    color-scheme: light;
+    --surface: #ffffff;
+    --line: #e3e2de;
+    --color-slate-50: #fafaf8; --color-slate-100: #f1f0ed; --color-slate-200: #e3e2de; --color-slate-300: #d0cec9;
+    --color-slate-400: #9a9ca2; --color-slate-500: #6b6e76; --color-slate-600: #4a4d55; --color-slate-700: #363940;
+    --color-slate-800: #24262c; --color-slate-900: #15171c; --color-slate-950: #0e0f13;
+    --color-brand-50: #fbebee; --color-brand-600: #c8102e; --color-brand-700: #a50d26;
+    --color-emerald-50: #eaf4ee; --color-emerald-700: #1f7a4d; --color-amber-50: #faf0de; --color-amber-700: #8a5200;
+    color: #15171c;
+  }
+  html.dark .light-island .bg-white { background-color: #ffffff; }
+  html.dark .light-island .bg-slate-900 { background-color: #15171c; }
+  html.dark .light-island {
+    --color-blue-50: #f1f0ed; --color-blue-100: #e8e7e3; --color-blue-200: #dad8d3; --color-blue-300: #c5c3be;
+    --color-blue-400: #8a8d94; --color-blue-500: #4a4d55; --color-blue-600: #15171c; --color-blue-700: #2a2d34; --color-blue-800: #15171c; --color-blue-900: #15171c;
+    --color-action-600: #15171c; --color-action-700: #2a2d34;
+    --color-emerald-500: #2e9161; --color-emerald-600: #1f7a4d; --color-amber-500: #b26a00;
+  }
+}
