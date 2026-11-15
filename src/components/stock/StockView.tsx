@@ -107,9 +107,12 @@ export const StockView: React.FC<StockViewProps> = ({
       const t = e.target as HTMLElement;
       const typing = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable);
       if (e.key === '/' && !typing) {
+        // En la PC el buscador está en la barra superior
+        const g = document.getElementById('global-search') as HTMLInputElement | null;
+        const target = g && g.offsetParent ? g : searchRef.current;
         e.preventDefault();
-        searchRef.current?.focus();
-        searchRef.current?.select();
+        target?.focus();
+        target?.select();
       }
     };
     window.addEventListener('keydown', onKey);
@@ -193,7 +196,7 @@ export const StockView: React.FC<StockViewProps> = ({
   return (
     <div className="space-y-4">
       {/* ============ BARRA DE BÚSQUEDA (sticky en celular) ============ */}
-      <div className="sticky top-14 lg:static z-20 -mx-4 sm:mx-0 px-4 sm:px-0 py-2.5 sm:py-0 bg-canvas/95 backdrop-blur-md sm:bg-transparent sm:backdrop-blur-none border-b border-slate-200/70 sm:border-0">
+      <div className="lg:hidden sticky top-14 z-20 -mx-4 sm:mx-0 px-4 sm:px-0 py-2.5 sm:py-0 bg-canvas/95 backdrop-blur-md sm:bg-transparent sm:backdrop-blur-none border-b border-slate-200/70 sm:border-0">
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
             <Search className="w-[18px] h-[18px] text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />

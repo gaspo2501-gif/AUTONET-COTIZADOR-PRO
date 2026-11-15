@@ -303,7 +303,7 @@ export const VehicleQuoteModal: React.FC<VehicleQuoteModalProps> = ({
                     onClick={() => setProvince('Neuquén')}
                     className={`px-3 py-1.5 text-xs font-bold rounded-md transition-all ${
                       province === 'Neuquén'
-                        ? 'bg-blue-600 text-white shadow-xs'
+                        ? 'bg-slate-900 text-white shadow-xs'
                         : 'text-slate-700 hover:text-slate-900'
                     }`}
                   >
@@ -315,7 +315,7 @@ export const VehicleQuoteModal: React.FC<VehicleQuoteModalProps> = ({
                     onClick={() => setProvince('Río Negro')}
                     className={`px-3 py-1.5 text-xs font-bold rounded-md transition-all ${
                       province === 'Río Negro'
-                        ? 'bg-blue-600 text-white shadow-xs'
+                        ? 'bg-slate-900 text-white shadow-xs'
                         : 'text-slate-700 hover:text-slate-900'
                     }`}
                   >
@@ -565,7 +565,7 @@ export const VehicleQuoteModal: React.FC<VehicleQuoteModalProps> = ({
                     onClick={() => setLlevaFinanciacion(true)}
                     className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${
                       llevaFinanciacion
-                        ? 'bg-blue-600 text-white shadow-xs'
+                        ? 'bg-slate-900 text-white shadow-xs'
                         : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
@@ -619,7 +619,7 @@ export const VehicleQuoteModal: React.FC<VehicleQuoteModalProps> = ({
                               type="button"
                               onClick={() => handleUpdateFinancingOption(opc.id, 'entidad', ent.nombre)}
                               className={`text-[11px] font-bold px-2 py-1 rounded-lg border ${
-                                opc.entidad.toUpperCase() === ent.nombre ? 'bg-blue-600 border-blue-600 text-white' : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-300'
+                                opc.entidad.toUpperCase() === ent.nombre ? 'bg-slate-900 border-slate-900 text-white' : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-300'
                               }`}
                             >
                               {ent.nombre}
@@ -742,7 +742,7 @@ export const VehicleQuoteModal: React.FC<VehicleQuoteModalProps> = ({
                 type="button"
                 id="btn-generar-presupuesto"
                 onClick={handleGenerateBudget}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-black text-xs transition-colors shadow-xs"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 active:bg-brand-800 text-white font-black text-xs transition-colors shadow-xs"
               >
                 <FileText className="w-4 h-4" />
                 <span>Generar presupuesto</span>

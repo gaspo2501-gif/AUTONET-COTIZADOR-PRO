@@ -495,7 +495,7 @@ export const UpdateStockView: React.FC<UpdateStockViewProps> = ({
                 id="btn-seleccionar-pdf"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={isProcessing}
-                className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold shadow-sm transition-colors flex items-center gap-2"
+                className="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold shadow-sm transition-colors flex items-center gap-2"
               >
                 <FileUp className="w-4 h-4" />
                 <span>{isProcessing ? 'Analizando documento...' : 'Cargar archivo PDF'}</span>
@@ -806,7 +806,7 @@ export const UpdateStockView: React.FC<UpdateStockViewProps> = ({
                               <button
                                 type="button"
                                 onClick={() => handleStartResolveRecord(item)}
-                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] transition-colors shadow-2xs cursor-pointer"
+                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-brand-600 hover:bg-brand-700 text-white font-bold text-[11px] transition-colors shadow-2xs cursor-pointer"
                                 title="Incorporar este vehículo manualmente al stock"
                               >
                                 <Wrench className="w-3 h-3" />
@@ -914,7 +914,7 @@ export const UpdateStockView: React.FC<UpdateStockViewProps> = ({
               onClick={() => setFilterDiffType('modificados')}
               className={`rounded-xl p-4 border text-left transition-all cursor-pointer ${
                 filterDiffType === 'modificados'
-                  ? 'bg-blue-600 text-white border-blue-600 shadow-md ring-2 ring-blue-300'
+                  ? 'bg-slate-900 text-white border-slate-900 shadow-md ring-2 ring-slate-300'
                   : 'bg-blue-50 hover:bg-blue-100/70 border-blue-200 shadow-xs'
               }`}
             >
@@ -997,7 +997,7 @@ export const UpdateStockView: React.FC<UpdateStockViewProps> = ({
                 onClick={() => setFilterDiffType('modificados')}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
                   filterDiffType === 'modificados'
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-slate-900 text-white'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
@@ -1034,7 +1034,7 @@ export const UpdateStockView: React.FC<UpdateStockViewProps> = ({
                 className={`px-6 py-2.5 rounded-xl text-xs font-extrabold shadow-sm transition-all flex items-center gap-2 ${
                   diffResult.safetyValidation?.isBlocked
                     ? 'bg-slate-200 text-slate-400 cursor-not-allowed border border-slate-300'
-                    : 'bg-blue-600 hover:bg-blue-700 text-white'
+                    : 'bg-brand-600 hover:bg-brand-700 text-white'
                 }`}
                 title={
                   diffResult.safetyValidation?.isBlocked 
@@ -1326,7 +1326,7 @@ export const UpdateStockView: React.FC<UpdateStockViewProps> = ({
                 type="button"
                 onClick={handleSaveResolvedRecord}
                 disabled={!resolveForm.patente.trim() || !resolveForm.modelo.trim()}
-                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-bold text-xs transition-colors shadow-xs cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 disabled:opacity-50 text-white font-bold text-xs transition-colors shadow-xs cursor-pointer"
               >
                 Incorporar al Stock
               </button>

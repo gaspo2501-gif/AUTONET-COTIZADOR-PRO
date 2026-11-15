@@ -1352,7 +1352,7 @@ export const CommissionsView: React.FC<CommissionsViewProps> = ({
                   const el = document.getElementById('detalle-operaciones-section');
                   if (el) el.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold cursor-pointer"
+                className="px-4 py-1.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold cursor-pointer"
               >
                 Ver Detalle Completo
               </button>
@@ -1434,7 +1434,7 @@ export const CommissionsView: React.FC<CommissionsViewProps> = ({
                   setShowPendingInvoiceModal(false);
                   onNavigateToSales();
                 }}
-                className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold cursor-pointer"
+                className="px-4 py-1.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold cursor-pointer"
               >
                 Ir a Mis Ventas para Marcar Facturadas
               </button>

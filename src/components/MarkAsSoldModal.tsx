@@ -241,7 +241,7 @@ export const MarkAsSoldModal: React.FC<MarkAsSoldModalProps> = ({
               >
                 <div className="flex items-center justify-between mb-1.5">
                   <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${
-                    saleOwner === 'other' ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-600'
+                    saleOwner === 'other' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600'
                   }`}>
                     <Users className="w-4 h-4" />
                   </div>
@@ -327,7 +327,7 @@ export const MarkAsSoldModal: React.FC<MarkAsSoldModalProps> = ({
                   onClick={() => setIvaVenta(21)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                     ivaVenta === 21
-                      ? 'bg-blue-600 text-white shadow-2xs'
+                      ? 'bg-slate-900 text-white shadow-2xs'
                       : 'bg-white border border-slate-300 text-slate-700 hover:bg-slate-100'
                   }`}
                 >
@@ -338,7 +338,7 @@ export const MarkAsSoldModal: React.FC<MarkAsSoldModalProps> = ({
                   onClick={() => setIvaVenta(10.5)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                     ivaVenta === 10.5
-                      ? 'bg-blue-600 text-white shadow-2xs'
+                      ? 'bg-slate-900 text-white shadow-2xs'
                       : 'bg-white border border-slate-300 text-slate-700 hover:bg-slate-100'
                   }`}
                 >
@@ -422,7 +422,7 @@ export const MarkAsSoldModal: React.FC<MarkAsSoldModalProps> = ({
                   type="button"
                   onClick={() => setUsaCredinet(true)}
                   className={`px-2.5 py-1 rounded-md text-xs font-bold cursor-pointer ${
-                    usaCredinet ? 'bg-indigo-600 text-white shadow-2xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    usaCredinet ? 'bg-slate-900 text-white shadow-2xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                   }`}
                 >
                   Sí

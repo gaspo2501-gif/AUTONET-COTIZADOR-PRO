@@ -1,5 +1,6 @@
 import React from 'react';
-import { ChevronDown, GitCompare, ExternalLink } from 'lucide-react';
+import { ChevronDown, GitCompare, ExternalLink, Gauge, Fuel, Cog } from 'lucide-react';
+import { VehiclePhoto } from './ui/VehiclePhoto';
 import { Vehicle } from '../types/stock';
 import { formatCurrency, formatKm } from '../utils/formatters';
 import { UbBadge } from './ui/UbBadge';
@@ -67,60 +68,74 @@ export const VehicleCard: React.FC<VehicleCardProps> = React.memo(
       items.push({ key: 'reactivar', label: 'Reactivar (fue un error)', dot: '#1f7a4d', run: () => onStatusChange(vehicle, 'Disponible') });
     }
 
-    const specs = [vehicle.anio, formatKm(vehicle.kilometraje), vehicle.combustible, vehicle.caja, vehicle.traccion === '4x4' || vehicle.traccion === 'AWD' ? vehicle.traccion : '', vehicle.color]
-      .filter(Boolean)
-      .join(' · ');
-
     return (
-      <article className={`group autonet-card autonet-card-hover flex flex-col relative ${sold || historical ? 'bg-slate-50' : ''}`}>
-        {/* Patente + estado */}
-        <div className="px-[18px] pt-4 flex items-center justify-between gap-2">
-          <span className="plate">
+      <article className={`group autonet-card autonet-card-hover flex flex-col relative ${sold || historical ? 'opacity-90' : ''}`}>
+        {/* Foto + patente + estado */}
+        <VehiclePhoto vehicle={vehicle} className="h-44" rounded="rounded-t-[var(--radius-card)]">
+          <button type="button" onClick={() => onSelect(vehicle)} className="absolute inset-0" aria-label={`Abrir ficha de ${vehicle.marca} ${vehicle.modelo}`} />
+          <span className="absolute top-3 left-3 plate on-photo shadow-sm pointer-events-none">
             <Highlight text={vehicle.patente} query={query} />
           </span>
-          <div className="flex items-center gap-1.5">
-            <StatusBadge vehicle={vehicle} size="sm" />
-            {onToggleCompare && (
-              <button
-                type="button"
-                onClick={() => onToggleCompare(vehicle)}
-                className={`p-1 rounded-md transition-colors ${isComparing ? 'bg-slate-900 text-white' : 'text-slate-300 hover:text-slate-700 hover:bg-slate-100'}`}
-                title={isComparing ? 'Quitar de la comparación' : 'Sumar a la comparación'}
-                aria-label={isComparing ? 'Quitar de la comparación' : 'Sumar a la comparación'}
-                aria-pressed={!!isComparing}
-              >
-                <GitCompare className="w-3.5 h-3.5" />
-              </button>
-            )}
-          </div>
-        </div>
+          <span className="absolute top-3 right-3 flex items-center gap-1.5 pointer-events-none">
+            <StatusBadge vehicle={vehicle} size="md" />
+          </span>
+          {onToggleCompare && (
+            <button
+              type="button"
+              onClick={() => onToggleCompare(vehicle)}
+              className={`absolute bottom-3 right-3 w-8 h-8 rounded-full flex items-center justify-center shadow-sm transition-colors ${
+                isComparing ? 'bg-slate-900 text-white' : 'on-photo text-slate-500 hover:text-slate-900'
+              }`}
+              title={isComparing ? 'Quitar de la comparación' : 'Sumar a la comparación'}
+              aria-label={isComparing ? 'Quitar de la comparación' : 'Sumar a la comparación'}
+              aria-pressed={!!isComparing}
+            >
+              <GitCompare className="w-4 h-4" />
+            </button>
+          )}
+        </VehiclePhoto>
 
         {/* Qué auto es */}
-        <button type="button" onClick={() => onSelect(vehicle)} className="px-[18px] pt-3 text-left">
-          <h3 className="text-[16px] font-semibold tracking-[-0.01em] text-slate-900 leading-snug line-clamp-1">
+        <button type="button" onClick={() => onSelect(vehicle)} className="px-[18px] pt-4 text-left">
+          <h3 className="text-[16.5px] font-bold tracking-[-0.01em] text-slate-900 leading-snug line-clamp-1">
             <Highlight text={`${vehicle.marca} ${vehicle.modelo}`} query={query} />
           </h3>
           <p className="text-[12.5px] text-slate-500 line-clamp-1 mt-0.5">
-            <Highlight text={vehicle.version || '—'} query={query} />
+            <Highlight text={`${vehicle.version || '—'} · ${vehicle.anio}`} query={query} />
           </p>
         </button>
 
+        {/* Datos técnicos */}
+        <div className="px-[18px] pt-2.5 flex items-center gap-x-3.5 gap-y-1 flex-wrap text-[12.5px] text-slate-600">
+          <span className="inline-flex items-center gap-1">
+            <Gauge className="w-3.5 h-3.5 text-slate-400" /> {formatKm(vehicle.kilometraje)}
+          </span>
+          {vehicle.combustible && (
+            <span className="inline-flex items-center gap-1">
+              <Fuel className="w-3.5 h-3.5 text-slate-400" /> {vehicle.combustible}
+            </span>
+          )}
+          {vehicle.caja && (
+            <span className="inline-flex items-center gap-1">
+              <Cog className="w-3.5 h-3.5 text-slate-400" /> {vehicle.caja}
+            </span>
+          )}
+          {(vehicle.traccion === '4x4' || vehicle.traccion === 'AWD') && <span className="font-semibold text-slate-700">{vehicle.traccion}</span>}
+        </div>
+
         {/* Cuánto vale */}
         <div
-          className={`px-[18px] pt-3 font-display tabular font-semibold tracking-[-0.01em] leading-tight ${
-            priceToConfirm ? 'text-amber-700 text-[15px]' : sold ? 'text-slate-500 text-[22px]' : 'text-slate-900 text-[22px]'
+          className={`px-[18px] pt-3 tabular font-extrabold tracking-[-0.02em] leading-tight ${
+            priceToConfirm ? 'text-amber-700 text-[15px]' : sold ? 'text-slate-500 text-[23px]' : 'text-slate-900 text-[23px]'
           }`}
         >
           {formatCurrency(vehicle.precio, vehicle.moneda)}
         </div>
-        <p className="px-[18px] pt-1 text-[12.5px] text-slate-600 line-clamp-1">
-          <Highlight text={specs} query={query} />
-        </p>
 
         <div className="flex-1" />
 
         {/* Si está para mostrar */}
-        <div className="mx-[18px] mt-3.5 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+        <div className="mx-[18px] mt-3 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
           <UbBadge vehicle={vehicle} />
           <span className="flex items-center gap-2 min-w-0">
             {vehicle.empresa && <span className="text-[11.5px] text-slate-500 truncate capitalize">{vehicle.empresa.toLowerCase()}</span>}
@@ -129,7 +144,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = React.memo(
                 href={vehicle.urlAutonetOriginal}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-0.5 text-[11.5px] font-medium text-slate-700 hover:underline"
+                className="inline-flex items-center gap-0.5 text-[11.5px] font-semibold text-blue-600 hover:underline"
                 title="Ver publicación en autonet.com.ar"
               >
                 Web <ExternalLink className="w-3 h-3" />

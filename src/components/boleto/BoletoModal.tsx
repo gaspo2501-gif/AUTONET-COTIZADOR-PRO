@@ -582,7 +582,7 @@ const BoletoModalInner: React.FC<BoletoModalProps & { vehicle: Vehicle }> = ({
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors cursor-pointer shadow-xs"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs transition-colors cursor-pointer shadow-xs"
               >
                 <Upload className="w-4 h-4" />
                 <span>Cargar plantilla manualmente</span>
@@ -854,7 +854,7 @@ const BoletoModalInner: React.FC<BoletoModalProps & { vehicle: Vehicle }> = ({
                   type="button"
                   disabled={isActionLoading}
                   onClick={guard(handleDownloadPdf)}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-bold text-xs transition-colors cursor-pointer shadow-xs"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 disabled:bg-brand-300 text-white font-bold text-xs transition-colors cursor-pointer shadow-xs"
                 >
                   {isActionLoading ? (
                     <Loader2 className="w-4 h-4 animate-spin text-white" />

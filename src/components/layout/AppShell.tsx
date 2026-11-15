@@ -19,6 +19,8 @@ import {
   Home,
   Sun,
   Moon,
+  Bell,
+  CalendarDays,
 } from 'lucide-react';
 import { themeService } from '../../services/themeService';
 import { User } from 'firebase/auth';
@@ -42,21 +44,21 @@ interface NavItem {
 export const NAV_ITEMS: NavItem[] = [
   { key: 'inicio', label: 'Inicio', icon: Home, group: 'principal', bottom: true },
   { key: 'stock', label: 'Stock', icon: Car, group: 'principal', bottom: true },
-  { key: 'presupuestos', label: 'Presupuestos', shortLabel: 'Presup.', icon: FileText, group: 'principal', bottom: true },
+  { key: 'presupuestos', label: 'Cotizaciones', shortLabel: 'Cotiz.', icon: FileText, group: 'principal', bottom: true },
   { key: 'ventas', label: 'Ventas', icon: UserCheck, group: 'principal', bottom: true },
   { key: 'comisiones', label: 'Comisiones', icon: BadgePercent, group: 'otros' },
   { key: 'publicidad', label: 'Publicidad', icon: Megaphone, group: 'otros' },
-  { key: 'ajustes', label: 'Ajustes', icon: Settings, group: 'otros' },
+  { key: 'ajustes', label: 'Configuración', icon: Settings, group: 'otros' },
 ];
 
 export const TAB_TITLES: Record<NavTab, { title: string; subtitle: string }> = {
-  inicio: { title: 'Inicio', subtitle: 'Lo que hay que hacer hoy' },
-  stock: { title: 'Stock', subtitle: 'Unidades disponibles de Autonet' },
-  presupuestos: { title: 'Presupuestos', subtitle: 'Lo que enviaste a cada cliente y a quién retomar' },
+  inicio: { title: 'Panel de Control', subtitle: 'Resumen de tu trabajo en un vistazo' },
+  stock: { title: 'Stock de usados', subtitle: 'Unidades de Autonet: encontrá, cotizá y marcá su estado' },
+  presupuestos: { title: 'Cotizaciones y presupuestos', subtitle: 'Lo que enviaste a cada cliente y a quién retomar' },
   ventas: { title: 'Ventas', subtitle: 'Mis ventas, boletos del mes y vendidas por otros' },
   comisiones: { title: 'Comisiones', subtitle: 'Liquidación mensual y premios' },
   publicidad: { title: 'Publicidad', subtitle: 'Historias para Instagram y WhatsApp' },
-  ajustes: { title: 'Ajustes', subtitle: 'Tus datos, bancos, mensajes y copia de seguridad' },
+  ajustes: { title: 'Configuración', subtitle: 'Tus datos, apariencia, bancos, mensajes y copia de seguridad' },
   actualizar: { title: 'Actualizar con PDF', subtitle: 'Cargar la lista oficial de stock' },
 };
 
@@ -100,19 +102,29 @@ export const SyncPill: React.FC<{ status: SyncStatus; compact?: boolean; plain?:
   );
 };
 
-const BrandMark: React.FC<{ subtitle?: boolean; dark?: boolean }> = ({ dark = false }) => (
-  <div className="flex items-center gap-2.5 min-w-0">
-    <div className="w-7 h-7 rounded-[7px] bg-brand-600 flex items-center justify-center shrink-0">
-      <Car className="w-4 h-4 text-white" />
-    </div>
-    <span className={`font-bold text-[17px] tracking-[-0.02em] ${dark ? 'text-white' : 'text-slate-900'}`}>autonet</span>
-    <span className={`text-[9.5px] font-semibold tracking-[0.12em] rounded px-1.5 py-0.5 border ${dark ? 'text-[#a6aab3] border-[#3a3d45]' : 'text-slate-500 border-slate-300'}`}>PRO</span>
+/** Logo Autonet: auto en trazo + "autonet" + "Tus sueños en marcha". */
+export const BrandMark: React.FC<{ subtitle?: boolean; dark?: boolean; compact?: boolean }> = ({ dark = false, subtitle = true, compact = false }) => (
+  <div className={`flex flex-col ${compact ? 'items-start' : 'items-center'} min-w-0 leading-none select-none`}>
+    {!compact && (
+      <svg width="118" height="22" viewBox="0 0 118 22" fill="none" aria-hidden="true" className="mb-0.5">
+        <path
+          d="M6 19c3-6 9-9 18-10l14-1c8-5 18-8 30-7 11 1 20 5 26 10 6 1 12 2 18 6"
+          stroke={dark ? '#ffffff' : '#121c33'}
+          strokeWidth="2.6"
+          strokeLinecap="round"
+        />
+      </svg>
+    )}
+    <span className={`font-extrabold tracking-[-0.03em] ${compact ? 'text-[22px]' : 'text-[30px]'} ${dark ? 'text-white' : 'text-slate-900'}`}>
+      auto<span className="text-brand-600">net</span>
+    </span>
+    {subtitle && <span className={`mt-1 text-[11.5px] font-medium tracking-wide ${dark ? 'text-white/70' : 'text-slate-500'}`}>Tus sueños en marcha</span>}
   </div>
 );
 
 const Avatar: React.FC<{ size?: string }> = ({ size = 'w-9 h-9' }) => (
   <div
-    className={`${size} rounded-full bg-[#2a2d34] text-white flex items-center justify-center text-[11px] font-semibold tracking-wide shrink-0 select-none`}
+    className={`${size} rounded-full bg-gradient-to-br from-[#3b6cf0] to-[#1c44b8] text-white flex items-center justify-center text-[12px] font-bold tracking-wide shrink-0 select-none ring-2 ring-white/15`}
     title={`${ADVISOR_INFO.nombre} · ${ADVISOR_INFO.cargo}`}
   >
     {ADVISOR_INFO.nombre
@@ -122,6 +134,17 @@ const Avatar: React.FC<{ size?: string }> = ({ size = 'w-9 h-9' }) => (
       .join('')}
   </div>
 );
+
+/** Fecha y hora de la barra superior ("Vie. 14 de Noviembre · 14:32 hs"). */
+const useNow = () => {
+  const [now, setNow] = React.useState(() => new Date());
+  React.useEffect(() => {
+    const id = window.setInterval(() => setNow(new Date()), 30_000);
+    return () => window.clearInterval(id);
+  }, []);
+  return now;
+};
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 export const AppShell: React.FC<AppShellProps> = ({
   currentTab,
@@ -138,6 +161,12 @@ export const AppShell: React.FC<AppShellProps> = ({
   const [moreOpen, setMoreOpen] = React.useState(false);
   const { isInstallable, install } = usePWAInstall();
   const head = TAB_TITLES[currentTab];
+  const now = useNow();
+  const alerts = Number(badges.inicio || 0);
+  const dayLabel = `${cap(new Intl.DateTimeFormat('es-AR', { weekday: 'short' }).format(now).replace('.', ''))}. ${now.getDate()} de ${cap(
+    new Intl.DateTimeFormat('es-AR', { month: 'long' }).format(now)
+  )}`;
+  const timeLabel = `${new Intl.DateTimeFormat('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false }).format(now)} hs`;
 
   const go = (tab: NavTab) => {
     onSelectTab(tab);
@@ -145,20 +174,19 @@ export const AppShell: React.FC<AppShellProps> = ({
     window.scrollTo({ top: 0 });
   };
 
-
   return (
     <div className="min-h-screen lg:pl-[var(--sidebar-w)]">
-      {/* ============ SIDEBAR (escritorio) ============ */}
-      <aside className="hidden lg:flex fixed inset-y-0 left-0 w-[var(--sidebar-w)] flex-col bg-sidebar text-[#a6aab3] z-40">
-        <button type="button" onClick={() => go('inicio')} className="px-5 h-16 flex items-center text-left">
+      {/* ============ MENÚ LATERAL (escritorio) ============ */}
+      <aside className="hidden lg:flex fixed inset-y-0 left-0 w-[var(--sidebar-w)] flex-col bg-sidebar text-white/75 z-40">
+        <button type="button" onClick={() => go('inicio')} className="pt-7 pb-8 flex justify-center" aria-label="Ir al inicio">
           <BrandMark dark />
         </button>
 
-        <nav className="flex-1 overflow-y-auto scrollbar-none px-3 py-3 space-y-5" aria-label="Navegación principal">
+        <nav className="flex-1 overflow-y-auto scrollbar-none px-4 space-y-6" aria-label="Navegación principal">
           {(['principal', 'otros'] as const).map((group) => (
             <div key={group}>
-              {group === 'otros' && <div className="mx-3 mb-3 border-t border-[#2a2d34]" />}
-              <ul className="space-y-0.5">
+              <div className="px-3 mb-2 text-[11px] font-semibold tracking-[0.08em] uppercase text-white/40">{group === 'principal' ? 'Principal' : 'Gestión'}</div>
+              <ul className="space-y-1">
                 {NAV_ITEMS.filter((i) => i.group === group).map((item) => {
                   const active = currentTab === item.key || (item.key === 'stock' && currentTab === 'actualizar');
                   const badge = badges[item.key];
@@ -169,15 +197,20 @@ export const AppShell: React.FC<AppShellProps> = ({
                         id={`nav-tab-${item.key}`}
                         onClick={() => go(item.key)}
                         aria-current={active ? 'page' : undefined}
-                        className={`relative w-full h-9 flex items-center gap-3 px-2.5 rounded-[7px] text-[13.5px] font-medium transition-colors ${
-                          active ? 'bg-[#262930] text-white' : 'text-[#a6aab3] hover:bg-[#1f2228] hover:text-white'
+                        className={`relative w-full h-11 flex items-center gap-3.5 px-3.5 rounded-xl text-[14.5px] font-semibold transition-colors ${
+                          active
+                            ? 'bg-gradient-to-r from-brand-600 to-brand-500 text-white shadow-[0_8px_20px_-8px_rgba(225,29,46,0.7)]'
+                            : 'text-white/80 hover:bg-white/[0.06] hover:text-white'
                         }`}
                       >
-                        <item.icon className={`w-[17px] h-[17px] shrink-0 ${active ? 'text-white' : 'text-[#7d818b]'}`} />
+                        <item.icon className={`w-[20px] h-[20px] shrink-0 ${active ? 'text-white' : 'text-white/70'}`} />
                         <span className="flex-1 text-left truncate">{item.label}</span>
-                        {active && <span className="w-1.5 h-1.5 rounded-full bg-brand-600 shrink-0" aria-hidden="true" />}
                         {badge !== undefined && badge !== 0 && (
-                          <span className="text-[12px] font-normal text-[#7d818b] tabular">
+                          <span
+                            className={`min-w-6 h-6 px-1.5 rounded-full text-[11.5px] font-bold tabular flex items-center justify-center ${
+                              active ? 'bg-white/25 text-white' : 'bg-white/10 text-white/80'
+                            }`}
+                          >
                             {badge}
                           </span>
                         )}
@@ -190,59 +223,44 @@ export const AppShell: React.FC<AppShellProps> = ({
           ))}
 
           {isInstallable && (
-            <button type="button" onClick={() => install()} className="mx-1 w-[calc(100%-0.5rem)] flex items-center gap-2.5 px-3 py-2 rounded-lg border border-dashed border-[#3a3d45] text-[12px] font-medium text-[#a6aab3] hover:text-white">
+            <button type="button" onClick={() => install()} className="w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-dashed border-white/20 text-[12.5px] font-medium text-white/70 hover:text-white">
               <Download className="w-4 h-4" />
               Instalar app en este equipo
             </button>
           )}
         </nav>
 
-        {/* Usuario + sincronización */}
-        <div className="p-3 border-t border-[#2a2d34]">
-          <div className="flex items-center gap-2.5 p-2">
-            <Avatar size="w-8 h-8" />
+        {/* Perfil + sincronización + salir */}
+        <div className="px-4 pb-4 pt-3 border-t border-white/10 space-y-1">
+          <div className="flex items-center gap-3 p-2">
+            <Avatar size="w-10 h-10" />
             <div className="min-w-0 flex-1 leading-tight">
-              <div className="text-[13px] font-medium text-white truncate">{ADVISOR_INFO.nombre}</div>
-              <div className="text-[11.5px] text-[#7d818b] truncate">{user?.email || ADVISOR_INFO.cargo}</div>
+              <div className="text-[13.5px] font-bold text-white truncate">{ADVISOR_INFO.nombre}</div>
+              <div className="text-[11.5px] text-white/55 truncate">{ADVISOR_INFO.cargo || 'Asesor Comercial'}</div>
             </div>
-            {user ? (
-              <button type="button" onClick={onLogoutClick} className="p-1.5 rounded-md text-[#7d818b] hover:text-white hover:bg-[#262930]" title="Cerrar sesión">
-                <LogOut className="w-4 h-4" />
-              </button>
-            ) : (
-              <button type="button" onClick={onLoginClick} className="p-1.5 rounded-md text-[#7d818b] hover:text-white hover:bg-[#262930]" title="Iniciar sesión en la nube">
-                <LogIn className="w-4 h-4" />
-              </button>
-            )}
+            <SyncDot status={syncStatus} />
           </div>
-          <div className="mt-2 flex items-center justify-between px-1">
-            <SyncPill status={syncStatus} plain />
-            {!user && (
-              <button type="button" onClick={onLoginClick} className="text-[11.5px] font-medium text-white hover:underline">
-                Conectar nube
-              </button>
-            )}
-          </div>
+          {user ? (
+            <button type="button" onClick={onLogoutClick} className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] text-white/70 hover:text-white hover:bg-white/[0.06]">
+              <LogOut className="w-[18px] h-[18px]" /> Cerrar sesión
+            </button>
+          ) : (
+            <button type="button" onClick={onLoginClick} className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] text-white/70 hover:text-white hover:bg-white/[0.06]">
+              <LogIn className="w-[18px] h-[18px]" /> Iniciar sesión
+            </button>
+          )}
         </div>
       </aside>
 
-      {/* ============ TOP BAR ============ */}
-      <header className="sticky top-0 z-30 bg-white border-b border-slate-200">
-        <div className="h-14 lg:h-16 px-4 sm:px-6 lg:px-8 flex items-center gap-3 max-w-[1440px] mx-auto">
-          {/* Móvil: marca */}
+      {/* ============ BARRA SUPERIOR ============ */}
+      <header className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200/70">
+        <div className="h-14 lg:h-[72px] px-4 sm:px-6 lg:px-8 flex items-center gap-3 lg:gap-4 max-w-[1480px] mx-auto">
           <div className="lg:hidden flex-1 min-w-0">
-            <BrandMark subtitle={false} />
+            <BrandMark compact subtitle={false} />
           </div>
 
-          {/* Escritorio: título de sección */}
-          <div className="hidden lg:block flex-1 min-w-0">
-            <h1 className="text-[18px] font-semibold text-slate-900 tracking-[-0.01em] leading-tight truncate">{head.title}</h1>
-            <p className="text-[12px] text-slate-500 truncate">{head.subtitle}</p>
-          </div>
-
-          {currentTab !== 'stock' && (
-          <label className="flex items-center gap-2 w-40 sm:w-64 xl:w-80 px-3 h-9 rounded-lg bg-slate-50 focus-within:bg-white border border-slate-200 focus-within:border-slate-900 text-[13.5px] text-slate-500 transition-colors">
-            <Search className="w-4 h-4 shrink-0" />
+          <label className="hidden lg:flex flex-1 max-w-[760px] items-center gap-3 px-4 h-12 rounded-2xl bg-slate-50 border border-slate-200 focus-within:bg-white focus-within:border-blue-400 focus-within:shadow-[0_0_0_3px_rgba(59,108,240,0.12)] text-slate-400 transition">
+            <Search className="w-5 h-5 shrink-0" />
             <input
               id="global-search"
               type="search"
@@ -251,14 +269,39 @@ export const AppShell: React.FC<AppShellProps> = ({
                 onSearchChange(e.target.value);
                 if (currentTab !== 'stock') onSelectTab('stock');
               }}
-              placeholder="Buscar patente, modelo…"
-              className="flex-1 min-w-0 bg-transparent outline-none text-slate-900 placeholder:text-slate-400"
+              placeholder="Buscar por marca, modelo, patente…"
+              className="flex-1 min-w-0 bg-transparent outline-none text-[15px] text-slate-900 placeholder:text-slate-500"
               aria-label="Buscar unidad en el stock"
             />
+            <kbd className="text-[11.5px] font-semibold text-slate-500 border border-slate-200 bg-white rounded-md px-2 py-0.5">/</kbd>
           </label>
-          )}
+          <div className="hidden lg:block flex-1" />
 
           <ThemeToggle />
+
+          <button
+            type="button"
+            id="btn-avisos"
+            onClick={() => go('inicio')}
+            className="relative w-10 h-10 shrink-0 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 inline-flex items-center justify-center"
+            title={alerts ? `${alerts} pendiente${alerts > 1 ? 's' : ''} para hoy` : 'Sin pendientes'}
+            aria-label={alerts ? `Avisos: ${alerts} pendientes` : 'Avisos: sin pendientes'}
+          >
+            <Bell className="w-[22px] h-[22px]" />
+            {alerts > 0 && (
+              <span className="absolute top-1 right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-brand-600 text-white text-[10.5px] font-bold flex items-center justify-center border-2 border-white">
+                {alerts}
+              </span>
+            )}
+          </button>
+
+          <div className="hidden lg:flex items-center gap-3 pl-4 border-l border-slate-200">
+            <CalendarDays className="w-[22px] h-[22px] text-slate-600" />
+            <div className="leading-tight">
+              <div className="text-[13.5px] font-bold text-slate-900 whitespace-nowrap">{dayLabel}</div>
+              <div className="text-[12px] text-slate-500 tabular">{timeLabel}</div>
+            </div>
+          </div>
 
           <div className="lg:hidden">
             <SyncPill status={syncStatus} compact />
@@ -267,15 +310,19 @@ export const AppShell: React.FC<AppShellProps> = ({
       </header>
 
       {/* ============ CONTENIDO ============ */}
-      <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 pb-[calc(var(--bottomnav-h)+1.5rem+env(safe-area-inset-bottom))] lg:pb-10">
+      <main className="max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-7 pb-[calc(var(--bottomnav-h)+1.5rem+env(safe-area-inset-bottom))] lg:pb-12">
+        {currentTab !== 'inicio' && (
+          <div className="mb-6">
+            <h1 className="page-title">{head.title}</h1>
+            <p className="text-[14.5px] text-slate-500 mt-1">{head.subtitle}</p>
+            <span className="page-title-accent" aria-hidden="true" />
+          </div>
+        )}
         {children}
       </main>
 
-      {/* ============ BOTTOM NAV (celular / tablet) ============ */}
-      <nav
-        className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-slate-200 safe-bottom"
-        aria-label="Navegación"
-      >
+      {/* ============ MENÚ INFERIOR (celular / tablet) ============ */}
+      <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-sidebar safe-bottom" aria-label="Navegación">
         <div className="grid grid-cols-5 h-[var(--bottomnav-h)]">
           {NAV_ITEMS.filter((i) => i.bottom).map((item) => {
             const active = currentTab === item.key;
@@ -286,15 +333,12 @@ export const AppShell: React.FC<AppShellProps> = ({
                 type="button"
                 onClick={() => go(item.key)}
                 aria-current={active ? 'page' : undefined}
-                className={`relative flex flex-col items-center justify-center gap-1 text-[10.5px] font-bold transition-colors ${
-                  active ? 'text-brand-600' : 'text-slate-500'
-                }`}
+                className={`relative flex flex-col items-center justify-center gap-1 text-[10.5px] font-semibold transition-colors ${active ? 'text-white' : 'text-white/60'}`}
               >
-                {active && <span className="absolute top-0 inset-x-5 h-[3px] rounded-b bg-brand-600" />}
-                <span className="relative">
-                  <item.icon className="w-[22px] h-[22px]" />
+                <span className={`relative w-12 h-7 rounded-full flex items-center justify-center ${active ? 'bg-brand-600' : ''}`}>
+                  <item.icon className="w-[20px] h-[20px]" />
                   {item.key !== 'stock' && item.key !== 'inicio' && typeof badge === 'number' && badge > 0 && (
-                    <span className="absolute -top-1.5 -right-2.5 min-w-[17px] h-[17px] px-1 rounded-full bg-brand-600 text-white text-[9.5px] font-black flex items-center justify-center border-2 border-white">
+                    <span className="absolute -top-1 right-0.5 min-w-[17px] h-[17px] px-1 rounded-full bg-brand-600 text-white text-[9.5px] font-bold flex items-center justify-center border-2 border-sidebar">
                       {badge}
                     </span>
                   )}
@@ -306,11 +350,13 @@ export const AppShell: React.FC<AppShellProps> = ({
           <button
             type="button"
             onClick={() => setMoreOpen(true)}
-            className={`flex flex-col items-center justify-center gap-1 text-[10.5px] font-bold ${
-              !NAV_ITEMS.some((i) => i.bottom && i.key === currentTab) ? 'text-brand-600' : 'text-slate-500'
+            className={`flex flex-col items-center justify-center gap-1 text-[10.5px] font-semibold ${
+              !NAV_ITEMS.some((i) => i.bottom && i.key === currentTab) ? 'text-white' : 'text-white/60'
             }`}
           >
-            <MoreHorizontal className="w-[22px] h-[22px]" />
+            <span className={`w-12 h-7 rounded-full flex items-center justify-center ${!NAV_ITEMS.some((i) => i.bottom && i.key === currentTab) ? 'bg-brand-600' : ''}`}>
+              <MoreHorizontal className="w-[20px] h-[20px]" />
+            </span>
             <span>Más</span>
           </button>
         </div>
@@ -340,6 +386,12 @@ export const AppShell: React.FC<AppShellProps> = ({
       )}
     </div>
   );
+};
+
+/** Punto de estado de la nube (verde = sincronizado). */
+const SyncDot: React.FC<{ status: SyncStatus }> = ({ status }) => {
+  const m = SYNC_META[status] || SYNC_META.offline;
+  return <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${m.dot} ring-4 ring-white/10`} title={m.label} aria-label={m.label} role="img" />;
 };
 
 const MoreSheet: React.FC<{
@@ -420,11 +472,11 @@ const ThemeToggle: React.FC = () => {
       type="button"
       id="theme-toggle"
       onClick={() => themeService.toggle()}
-      className="w-9 h-9 shrink-0 rounded-lg border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50 inline-flex items-center justify-center"
+      className="w-10 h-10 shrink-0 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 inline-flex items-center justify-center"
       title={dark ? 'Pasar a modo claro' : 'Pasar a modo oscuro'}
       aria-label={dark ? 'Pasar a modo claro' : 'Pasar a modo oscuro'}
     >
-      {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+      {dark ? <Sun className="w-[20px] h-[20px]" /> : <Moon className="w-[20px] h-[20px]" />}
     </button>
   );
 };

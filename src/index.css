@@ -9,97 +9,107 @@
    ========================================================================= */
 
 @theme {
-  /* AUTONET PRO: grafito para actuar, rojo Autonet solo como firma */
-  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  /* =====================================================================
+     AUTONET PREMIUM LIGHT — SISTEMA DE DISEÑO
+     Cambiando un valor acá cambia en toda la app.
+     · Azul marino: menú, títulos y elementos secundarios
+     · Rojo Autonet: acción principal (Cotizar, Generar, Guardar) y sección activa
+     · Azul: enlaces, gráficos e íconos informativos
+     ===================================================================== */
+  --font-sans: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
 
-  --color-brand-50: #fbebee;
-  --color-brand-100: #f7d6dc;
-  --color-brand-200: #efb0bb;
-  --color-brand-300: #e38595;
-  --color-brand-500: #d42a45;
-  --color-brand-600: #c8102e;
-  --color-brand-700: #a50d26;
-  --color-brand-800: #840a1e;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 800;
 
-  /* Acción = grafito (antes azul) */
-  --color-action-50: #f1f0ed;
-  --color-action-100: #e8e7e3;
-  --color-action-200: #dad8d3;
-  --color-action-600: #15171c;
-  --color-action-700: #2a2d34;
-  --color-action-800: #15171c;
+  /* Rojo Autonet */
+  --color-brand-50: #fdecee;
+  --color-brand-100: #fbd5da;
+  --color-brand-200: #f6aab4;
+  --color-brand-300: #ef7d8d;
+  --color-brand-500: #ea2a40;
+  --color-brand-600: #e11d2e;
+  --color-brand-700: #bf1424;
+  --color-brand-800: #9a0f1d;
 
-  /* El azul suelto de la app pasa a la misma escala grafito: un solo color de acción */
-  --color-blue-50: #f1f0ed;
-  --color-blue-100: #e8e7e3;
-  --color-blue-200: #dad8d3;
-  --color-blue-300: #c5c3be;
-  --color-blue-400: #8a8d94;
-  --color-blue-500: #4a4d55;
-  --color-blue-600: #15171c;
-  --color-blue-700: #2a2d34;
-  --color-blue-800: #15171c;
-  --color-blue-900: #15171c;
+  /* Acción principal = rojo Autonet */
+  --color-action-50: #fdecee;
+  --color-action-100: #fbd5da;
+  --color-action-200: #f6aab4;
+  --color-action-600: #e11d2e;
+  --color-action-700: #bf1424;
+  --color-action-800: #9a0f1d;
 
-  /* Neutros cálidos (piedra) en lugar de gris azulado */
-  --color-slate-50: #fafaf8;
-  --color-slate-100: #f1f0ed;
-  --color-slate-200: #e3e2de;
-  --color-slate-300: #d0cec9;
-  --color-slate-400: #9a9ca2;
-  --color-slate-500: #6b6e76;
-  --color-slate-600: #4a4d55;
-  --color-slate-700: #363940;
-  --color-slate-800: #24262c;
-  --color-slate-900: #15171c;
-  --color-slate-950: #0e0f13;
+  /* Azul (enlaces, gráficos, íconos) */
+  --color-blue-50: #eef3ff;
+  --color-blue-100: #dde7ff;
+  --color-blue-200: #bccffe;
+  --color-blue-300: #8fb0fc;
+  --color-blue-400: #5f8af7;
+  --color-blue-500: #3b6cf0;
+  --color-blue-600: #2456e0;
+  --color-blue-700: #1c44b8;
+  --color-blue-800: #1a3a91;
+  --color-blue-900: #182f6e;
 
-  /* Estados, más sobrios */
-  --color-emerald-50: #eaf4ee;
-  --color-emerald-500: #2e9161;
-  --color-emerald-600: #1f7a4d;
-  --color-emerald-700: #1f7a4d;
-  --color-emerald-800: #175c3a;
-  --color-amber-50: #faf0de;
-  --color-amber-500: #b26a00;
-  --color-amber-700: #8a5200;
-  --color-amber-800: #8a5200;
+  /* Neutros con tinte azul marino (texto = azul marino oscuro) */
+  --color-slate-50: #f7f9fc;
+  --color-slate-100: #eff2f7;
+  --color-slate-200: #e3e8f0;
+  --color-slate-300: #cdd4e0;
+  --color-slate-400: #97a1b5;
+  --color-slate-500: #69748b;
+  --color-slate-600: #4b5670;
+  --color-slate-700: #34405a;
+  --color-slate-800: #1f2a44;
+  --color-slate-900: #121c33;
+  --color-slate-950: #0b1326;
 
-  /* Pesos más calmos en toda la app: los títulos se destacan por tamaño, no por grosor */
-  --font-weight-bold: 600;
-  --font-weight-extrabold: 600;
-  --font-weight-black: 650;
+  /* Estados */
+  --color-emerald-50: #e8f8ef;
+  --color-emerald-500: #22b26b;
+  --color-emerald-600: #179a5a;
+  --color-emerald-700: #12804a;
+  --color-emerald-800: #0e6239;
+  --color-amber-50: #fff4e1;
+  --color-amber-500: #f29b11;
+  --color-amber-700: #a85f00;
+  --color-amber-800: #854b00;
 
-  --color-ink: #15171c;
-  --color-canvas: #f5f5f3;
-  --color-sidebar: #16181d;
+  --color-ink: #121c33;
+  --color-canvas: #f3f5f9;
+  --color-sidebar: #17213a;
+  --color-sidebar-2: #1f2b48;
 
-  --shadow-card: none;
-  --shadow-lift: none;
-  --shadow-sheet: 0 -8px 24px -12px rgba(21, 23, 28, 0.25);
+  --radius-card: 16px;
+  --radius-control: 10px;
+
+  --shadow-card: 0 1px 2px rgba(18, 28, 51, 0.04), 0 6px 18px -8px rgba(18, 28, 51, 0.10);
+  --shadow-lift: 0 2px 4px rgba(18, 28, 51, 0.05), 0 14px 32px -12px rgba(18, 28, 51, 0.18);
+  --shadow-sheet: 0 -8px 24px -12px rgba(18, 28, 51, 0.25);
 }
 
 :root {
   /* Tokens heredados (compatibilidad con componentes existentes) */
   --autonet-navy: #0a1128;
-  --autonet-primary: #15171c;
-  --autonet-primary-hover: #2a2d34;
-  --autonet-brand: #c8102e;
+  --autonet-primary: #e11d2e;
+  --autonet-primary-hover: #bf1424;
+  --autonet-brand: #e11d2e;
   --autonet-surface: #ffffff;
   --surface: #ffffff;
-  --line: #e3e2de;
-  --accent: #15171c;
-  --autonet-bg: #f5f5f3;
-  --autonet-border: #e3e2de;
-  --autonet-text: #15171c;
-  --autonet-text-muted: #6b6e76;
+  --line: #e3e8f0;
+  --accent: #e11d2e;
+  --autonet-bg: #f3f5f9;
+  --autonet-border: #e3e8f0;
+  --autonet-text: #121c33;
+  --autonet-text-muted: #69748b;
   --autonet-success: #059669;
   --autonet-warning: #d97706;
   --autonet-danger: #dc2626;
 
-  --sidebar-w: 232px;
+  --sidebar-w: 248px;
   --bottomnav-h: 64px;
 }
 
@@ -163,13 +173,15 @@
   .autonet-card {
     background-color: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 12px;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
   }
   .autonet-card-hover {
-    transition: border-color 0.15s ease;
+    transition: border-color 0.15s ease, box-shadow 0.2s ease;
   }
   .autonet-card-hover:hover {
     border-color: var(--color-slate-300);
+    box-shadow: var(--shadow-lift);
   }
 
   .btn,
@@ -180,11 +192,11 @@
     align-items: center;
     justify-content: center;
     gap: 0.4rem;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.8125rem;
     line-height: 1.1;
-    border-radius: 8px;
-    padding: 0.6rem 1rem;
+    border-radius: var(--radius-control);
+    padding: 0.65rem 1.05rem;
     border: 1px solid transparent;
     transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
     white-space: nowrap;
@@ -195,8 +207,8 @@
   }
   .btn-sm {
     font-size: 0.8125rem;
-    padding: 0.5rem 0.8rem;
-    border-radius: 8px;
+    padding: 0.5rem 0.85rem;
+    border-radius: var(--radius-control);
   }
   .btn-icon {
     padding: 0.5rem;
@@ -206,6 +218,7 @@
   .autonet-btn-primary {
     background: var(--color-action-600);
     color: #fff;
+    box-shadow: 0 1px 2px rgba(225, 29, 46, 0.25), 0 4px 12px -4px rgba(225, 29, 46, 0.35);
   }
   .btn-primary:hover:not(:disabled),
   .autonet-btn-primary:hover {
@@ -219,11 +232,11 @@
     background: var(--color-brand-700);
   }
   .btn-dark {
-    background: #15171c;
+    background: var(--color-slate-900);
     color: #fff;
   }
   .btn-dark:hover:not(:disabled) {
-    background: var(--color-action-700);
+    background: var(--color-slate-800);
   }
   .btn-secondary,
   .autonet-btn-secondary {
@@ -255,8 +268,8 @@
     font-size: 0.875rem;
     font-weight: 500;
     border: 1px solid var(--color-slate-300);
-    border-radius: 8px;
-    padding: 0.6rem 0.75rem;
+    border-radius: var(--radius-control);
+    padding: 0.65rem 0.8rem;
     outline: none;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
@@ -267,14 +280,14 @@
     border-color: var(--color-slate-300);
   }
   .field:focus {
-    border-color: var(--color-slate-900);
-    box-shadow: 0 0 0 1px #15171c;
+    border-color: var(--color-blue-500);
+    box-shadow: 0 0 0 3px rgba(59, 108, 240, 0.15);
   }
   .field-label {
     display: block;
     font-size: 0.78rem;
-    font-weight: 500;
-    color: var(--color-slate-600);
+    font-weight: 600;
+    color: var(--color-slate-700);
     margin-bottom: 0.375rem;
   }
 
@@ -287,18 +300,47 @@
     font-weight: 500;
     color: var(--color-slate-600);
     background: var(--surface);
-    border: 1px solid var(--color-slate-300);
-    border-radius: 8px;
-    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--color-slate-200);
+    border-radius: var(--radius-control);
+    padding: 0.45rem 0.8rem;
     transition: all 0.15s ease;
   }
   .chip:hover {
     border-color: var(--color-slate-300);
   }
   .chip[data-active='true'] {
-    background: var(--surface);
-    color: var(--color-slate-900);
+    background: var(--color-slate-900);
+    color: #fff;
     border-color: var(--color-slate-900);
+  }
+
+  /* Encabezado de página: título grande + subrayado rojo */
+  .page-title {
+    font-size: 1.75rem;
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--color-slate-900);
+  }
+  .page-title-accent {
+    display: block;
+    width: 64px;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--color-brand-600);
+    margin-top: 0.6rem;
+  }
+  /* Fondo para chapas y botones apoyados sobre una foto */
+  .on-photo {
+    background: color-mix(in oklab, var(--surface) 94%, transparent);
+  }
+  /* Ícono circular de color (KPI, actividad) */
+  .icon-bubble {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    flex-shrink: 0;
   }
 
   .plate {
@@ -513,6 +555,9 @@ mark.hl {
     --accent: #e5243b;
     --color-canvas: #07090d;
     --color-sidebar: #0f1218;
+    --color-sidebar-2: #1a1f29;
+    --shadow-card: none;
+    --shadow-lift: 0 12px 32px rgba(0, 0, 0, 0.45);
     --autonet-text: #edeff4;
 
     --color-slate-50: #141821;
@@ -538,16 +583,16 @@ mark.hl {
     --color-action-600: #e5243b;
     --color-action-700: #c81d31;
     --color-action-800: #e5243b;
-    --color-blue-50: #1a1f29;
-    --color-blue-100: #232937;
-    --color-blue-200: #323a4b;
-    --color-blue-300: #4a5367;
-    --color-blue-400: #8b92a5;
-    --color-blue-500: #c9ceda;
-    --color-blue-600: #e5243b;
-    --color-blue-700: #c81d31;
-    --color-blue-800: #ff6b7d;
-    --color-blue-900: #ffd5da;
+    --color-blue-50: rgba(91, 140, 255, 0.13);
+    --color-blue-100: rgba(91, 140, 255, 0.2);
+    --color-blue-200: rgba(91, 140, 255, 0.32);
+    --color-blue-300: rgba(91, 140, 255, 0.5);
+    --color-blue-400: #7da3ff;
+    --color-blue-500: #5b8cff;
+    --color-blue-600: #4a7cf5;
+    --color-blue-700: #8fb0ff;
+    --color-blue-800: #b3c9ff;
+    --color-blue-900: #d6e2ff;
 
     --color-brand-50: rgba(229, 36, 59, 0.14);
     --color-brand-100: rgba(229, 36, 59, 0.22);
@@ -723,20 +768,20 @@ mark.hl {
   html.dark .light-island {
     color-scheme: light;
     --surface: #ffffff;
-    --line: #e3e2de;
-    --color-slate-50: #fafaf8; --color-slate-100: #f1f0ed; --color-slate-200: #e3e2de; --color-slate-300: #d0cec9;
-    --color-slate-400: #9a9ca2; --color-slate-500: #6b6e76; --color-slate-600: #4a4d55; --color-slate-700: #363940;
-    --color-slate-800: #24262c; --color-slate-900: #15171c; --color-slate-950: #0e0f13;
-    --color-brand-50: #fbebee; --color-brand-600: #c8102e; --color-brand-700: #a50d26;
+    --line: #e3e8f0;
+    --color-slate-50: #f7f9fc; --color-slate-100: #eff2f7; --color-slate-200: #e3e8f0; --color-slate-300: #cdd4e0;
+    --color-slate-400: #97a1b5; --color-slate-500: #69748b; --color-slate-600: #4b5670; --color-slate-700: #34405a;
+    --color-slate-800: #1f2a44; --color-slate-900: #121c33; --color-slate-950: #0b1326;
+    --color-brand-50: #fdecee; --color-brand-600: #e11d2e; --color-brand-700: #bf1424;
     --color-emerald-50: #eaf4ee; --color-emerald-700: #1f7a4d; --color-amber-50: #faf0de; --color-amber-700: #8a5200;
     color: #15171c;
   }
   html.dark .light-island .bg-white { background-color: #ffffff; }
-  html.dark .light-island .bg-slate-900 { background-color: #15171c; }
+  html.dark .light-island .bg-slate-900 { background-color: #121c33; }
   html.dark .light-island {
-    --color-blue-50: #f1f0ed; --color-blue-100: #e8e7e3; --color-blue-200: #dad8d3; --color-blue-300: #c5c3be;
-    --color-blue-400: #8a8d94; --color-blue-500: #4a4d55; --color-blue-600: #15171c; --color-blue-700: #2a2d34; --color-blue-800: #15171c; --color-blue-900: #15171c;
-    --color-action-600: #15171c; --color-action-700: #2a2d34;
+    --color-blue-50: #eef3ff; --color-blue-100: #dde7ff; --color-blue-200: #bccffe; --color-blue-300: #8fb0fc;
+    --color-blue-400: #5f8af7; --color-blue-500: #3b6cf0; --color-blue-600: #2456e0; --color-blue-700: #1c44b8; --color-blue-800: #1a3a91; --color-blue-900: #182f6e;
+    --color-action-600: #e11d2e; --color-action-700: #bf1424;
     --color-emerald-500: #2e9161; --color-emerald-600: #1f7a4d; --color-amber-500: #b26a00;
   }
 }

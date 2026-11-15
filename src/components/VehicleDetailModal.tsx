@@ -332,7 +332,7 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                   target="_blank"
                   rel="noopener noreferrer"
                   id="modal-btn-ver-autonet"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-xs"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs transition-colors shadow-xs"
                 >
                   <span>Ver en Autonet</span>
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -344,9 +344,9 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                 type="button"
                 id="modal-btn-cotizar"
                 onClick={handleOpenQuoteModal}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-colors shadow-xs"
+                className="btn btn-primary"
               >
-                <Calculator className="w-3.5 h-3.5 text-blue-400" />
+                <Calculator className="w-4 h-4" />
                 <span>Cotizar</span>
               </button>
 

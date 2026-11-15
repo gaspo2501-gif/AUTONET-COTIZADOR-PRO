@@ -103,12 +103,12 @@ export const UnitWorkspace: React.FC<UnitWorkspaceProps> = ({
                   onClick={() => go(s.key)}
                   title={!can ? 'Primero generá el presupuesto desde la cotización' : undefined}
                   className={`relative px-3 py-2.5 text-[13px] font-semibold whitespace-nowrap inline-flex items-center gap-1.5 border-b-2 -mb-px ${
-                    active ? 'border-slate-900 text-slate-900' : 'border-transparent text-slate-500 enabled:hover:text-slate-800 disabled:opacity-40'
+                    active ? 'border-brand-600 text-slate-900' : 'border-transparent text-slate-500 enabled:hover:text-slate-800 disabled:opacity-40'
                   }`}
                 >
                   <span
                     className={`w-5 h-5 rounded-full text-[11px] font-bold flex items-center justify-center ${
-                      active ? 'bg-slate-900 text-white' : past ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'
+                      active ? 'bg-brand-600 text-white' : past ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'
                     }`}
                   >
                     {past ? <Check className="w-3 h-3" /> : i + 1}

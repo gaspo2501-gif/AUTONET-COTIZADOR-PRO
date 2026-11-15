@@ -25,7 +25,7 @@ const apply = (mode: ThemeMode) => {
   const root = document.documentElement;
   root.classList.toggle('dark', dark);
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute('content', dark ? '#07090d' : '#16181d');
+  if (meta) meta.setAttribute('content', dark ? '#07090d' : '#17213a');
   listeners.forEach((l) => l(mode, dark));
 };
 

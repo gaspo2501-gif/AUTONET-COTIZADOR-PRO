@@ -144,34 +144,17 @@ export const MySalesView: React.FC<MySalesViewProps> = ({
   return (
     <div className="max-w-7xl mx-auto space-y-6 animate-in fade-in duration-150">
       
-      {/* Cabecera Principal */}
-      <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-200 mb-2">
-            <UserCheck className="w-4 h-4" />
-            <span>Control Comercial del Asesor</span>
-          </div>
-          <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-            Resumen de Mis Ventas
-          </h1>
-          <p className="text-sm text-slate-500 mt-1 max-w-2xl">
-            Lleve el registro detallado de las operaciones comerciales cerradas por usted, diferenciándolas de las ventas de otros asesores y de unidades retiradas de stock.
-          </p>
-        </div>
-
-        <button
-          type="button"
-          onClick={onNavigateToStock}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-colors shadow-xs shrink-0 self-start md:self-auto"
-        >
-          <Car className="w-4 h-4 text-blue-400" />
-          <span>Explorar Stock Activo</span>
+      {/* Atajo al stock (el título de la sección ya está arriba) */}
+      <div className="flex justify-end -mt-2">
+        <button type="button" onClick={onNavigateToStock} className="btn btn-secondary btn-sm">
+          <Car className="w-4 h-4" />
+          <span>Explorar stock activo</span>
         </button>
       </div>
 
       {/* Tarjetas de Métricas */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-gradient-to-br from-emerald-500 to-teal-700 rounded-2xl p-5 text-white shadow-md flex flex-col justify-between">
+        <div className="bg-gradient-to-br from-slate-900 to-slate-700 rounded-2xl p-5 text-white shadow-md flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between text-emerald-100 text-xs font-bold mb-2">
               <span>Mis Ventas Propias</span>
@@ -255,7 +238,7 @@ export const MySalesView: React.FC<MySalesViewProps> = ({
               onClick={() => setSalesFilter('other')}
               className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${
                 salesFilter === 'other'
-                  ? 'bg-blue-600 text-white shadow-xs'
+                  ? 'bg-slate-900 text-white shadow-xs'
                   : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
               }`}
             >
@@ -480,7 +463,7 @@ export const MySalesView: React.FC<MySalesViewProps> = ({
                                     setInvoiceModalVehicle(v);
                                     setInvoiceDateInput(todayISO());
                                   }}
-                                  className="inline-flex items-center gap-1 px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-[11px] font-bold cursor-pointer shadow-2xs transition-colors"
+                                  className="inline-flex items-center gap-1 px-2 py-1 bg-brand-600 hover:bg-brand-700 text-white rounded text-[11px] font-bold cursor-pointer shadow-2xs transition-colors"
                                 >
                                   <FileCheck className="w-3 h-3" />
                                   <span>MARCAR FACTURADA</span>
@@ -659,7 +642,7 @@ export const MySalesView: React.FC<MySalesViewProps> = ({
                       setInvoiceModalVehicle(null);
                     }
                   }}
-                  className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs disabled:opacity-50 cursor-pointer shadow-2xs"
+                  className="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs disabled:opacity-50 cursor-pointer shadow-2xs"
                 >
                   CONFIRMAR FACTURACIÓN
                 </button>
