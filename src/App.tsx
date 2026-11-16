@@ -8,7 +8,7 @@ import { CommercialBudget, quoteService } from './services/quoteService';
 import { authService } from './services/authService';
 import { SyncStatus } from './services/firestoreService';
 import { normalizePatent, isSameVehicle } from './utils/vehicleIdentity';
-import { calculateStockCounts, applyStockFilters, validateVisibleVehiclesIntegrity } from './utils/stockSelectors';
+import { calculateStockCounts, applyStockFilters, validateVisibleVehiclesIntegrity, getMySoldVehicles } from './utils/stockSelectors';
 
 import { AppShell, NavTab } from './components/layout/AppShell';
 import { StockView } from './components/stock/StockView';
@@ -321,6 +321,13 @@ export default function App() {
     setBoletoReopen({ vehicle: v, data: rec.data });
   };
 
+  // Ventas del mes en curso (incluye las que ya no figuran en el PDF porque se entregaron)
+  const mySalesThisMonth = useMemo(() => {
+    const d = new Date();
+    const month = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    return getMySoldVehicles(vehicles).filter((v) => (v.soldAt || '').slice(0, 7) === month).length;
+  }, [vehicles]);
+
   const printBudget = activeBudget || unitBudget;
 
   return (
@@ -349,7 +356,7 @@ export default function App() {
         <AppShell
           currentTab={currentTab}
           onSelectTab={navigate}
-          badges={{ inicio: budgetAlertCount || undefined, stock: stockCounts.disponible, ventas: stockCounts.misVentas, presupuestos: budgetAlertCount || undefined }}
+          badges={{ inicio: budgetAlertCount || undefined, stock: stockCounts.disponible, ventas: mySalesThisMonth || undefined, presupuestos: budgetAlertCount || undefined }}
           syncStatus={syncStatus}
           user={currentUser}
           onLoginClick={() => setShowLoginModal(true)}
