@@ -581,6 +581,8 @@ class StockService {
     const updated: Vehicle = {
       ...current,
       estado: 'Disponible',
+      // Sale del historial: vuelve a "En stock" (antes quedaba marcada como fuera de stock)
+      isHistorical: false,
       estadoModificadoManualmente: false,
       saleOwner: null,
       soldAt: undefined,
